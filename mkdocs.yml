@@ -2,6 +2,8 @@ site_name: escflee
 
 theme:
   name: material
+  features:
+    - navigation.expand
 
 nav:
   - 课程:
