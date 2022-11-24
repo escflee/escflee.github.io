@@ -1,0 +1,9 @@
+{
+  "promptDelete": false,
+  "useMarkdownLinks": true,
+  "attachmentFolderPath": "./media",
+  "trashOption": "system",
+  "alwaysUpdateLinks": true,
+  "livePreview": true,
+  "defaultViewMode": "preview"
+}
