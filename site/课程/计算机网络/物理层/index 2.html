@@ -1,0 +1,449 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>物理层 - escflee</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="escflee" class="md-header__button md-logo" aria-label="escflee" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            escflee
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              物理层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="escflee" class="md-nav__button md-logo" aria-label="escflee" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    escflee
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          课程
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          课程
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_1" type="checkbox" id="__nav_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_1">
+          操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="操作系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        文件管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">物理层</h1>
+<h1 id="_2">理论基础</h1>
+<h2 id="_3">参数</h2>
+<ul>
+<li>波特率Baud Rate：单位时间内载波调制变化的次数</li>
+<li>比特率Bit Rate：单位时间传输的比特数。
+  $Bit Rate = Baud Rate*(log_2V)$，V为信号的有效状态数（电平级数）</li>
+<li>信道容量Channel Capacity：信道的最大数据率</li>
+<li>吞吐量Throughput：网络容量的度量，表示单位时间网络可以传送的数据位数（bps）</li>
+<li>负载Load：表示单位时间内进入网络的数据位数（bps）</li>
+<li>传播速度Propagation Speed：信号单位时间传送的距离（m/s）</li>
+<li>误码率Bit Error Rate：信号传输可靠性指标，等于传送错的位数/总的传送位数</li>
+<li>时延Delay：从发送数据的第一位开始，到最后一位被接受所经历的时间，由以下部分组成：</li>
+<li>发送时延Transmission Delay：发送一段数据所用的时间（数据长度/信道带宽）</li>
+<li>传播时延Propagation Delay：信号通过传输介质的时间</li>
+<li>节点处理时延Nodal Processing Delay：交换机、路由器处理所用时间</li>
+<li>排队时延Queuing Delay：交换机、路由器中排队等待所用时间</li>
+</ul>
+<h2 id="-bandwidthhzbps">- 带宽Bandwidth：模拟信道中，传输过程中振幅不会明显减弱的频率的范围，单位为Hz。也可以表示数字信道中的最大数据速率，单位为bps。</h2>
+<h2 id="_4">属性</h2>
+<ul>
+<li>低通、带通：</li>
+</ul>
+<p><img alt="image-20220617231100630" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220617231100630.png" /></p>
+<ul>
+<li>单工、半双工、全双工：</li>
+<li>单工Simplex：信号只能单向传输</li>
+<li>半双工Half-duplex：信号可以双向传输，但同一时刻只能是同一方向</li>
+<li>
+<p>全双工Full-duplex：信号可以同时双向传输</p>
+</li>
+<li>
+<p>串行传输、并行传输</p>
+</li>
+<li>串行传输Serial Transmission：只能同时传输一条比特流</li>
+<li>并行传输Parallel Transmission：多条比特流同时传输</li>
+<li>异步传输、同步传输</li>
+<li>异步传输Asynchronous Transmission：以字符为单位传输，间隔任意，通过起始位和停止位同步</li>
+<li>同步传输Synchronous Transmision：以数据块为单位传输，通过时钟信号同步</li>
+</ul>
+<h2 id="_5">最大数据速率</h2>
+<ul>
+<li>
+<p>信噪比：信号功率和噪声功率的比值S/N。通常以对数形式$10log_{10}S/N$表示，单位为分贝dB。</p>
+</li>
+<li>
+<p>无噪声信道：任意信号经过带宽为B的低通滤波器后，可以经过每秒2B次采样还原原信号。此时最大数据率为：</p>
+</li>
+</ul>
+<p>$bitrate = 2<em>bandwidth</em>log_2V$</p>
+<p>(奈奎斯特公式，Nyquist Bit Rate)</p>
+<p>其中V为信号采样的电平数。</p>
+<ul>
+<li>有噪声信道：最大数据率的理论值为：</li>
+</ul>
+<p>$Capacity=bandwidth*log_2(1+\frac{signal_power}{noise_power})$</p>
+<p>（香农公式，Shannon Capacity）</p>
+<ul>
+<li>最大数据速率：根据奈奎斯特公式和香农公式计算出两个理论上的最大值，取两者之中的较小值。</li>
+</ul>
+<h1 id="_6">传输介质</h1>
+<h2 id="_7">双绞线</h2>
+<p>Twisted pair，由两根互相绝缘的铜线螺旋缠绕而成，两根线的波互相抵消使得辐射大大减少。根据外层是否有屏蔽层可分为UTP和STP。</p>
+<p><img alt="image-20220617233031241" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220617233031241.png" /></p>
+<h2 id="_8">同轴电缆</h2>
+<p>Coaxial cable，相比UTP拥有更好的屏蔽特性和更大的带宽。</p>
+<p><img alt="image-20220617233306170" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220617233306170.png" /></p>
+<h2 id="_9">光纤</h2>
+<p>Fiber，高带宽，低重量，可靠性高</p>
+<p><img alt="image-20220617233727665" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220617233727665.png" /></p>
+<h2 id="_10">无线电</h2>
+<ul>
+<li>包括微波、红外线、毫米波、通信卫星等。</li>
+<li>某些波段受政府管制。</li>
+</ul>
+<h1 id="_11">数字调制</h1>
+<h2 id="_12">调制</h2>
+<p>可以通过改变相位、振幅、频率等方式使得一个波特能够携带多个比特的信息。</p>
+<p>QPSK: Quadrature Phase Shift Keying-正交相移键控</p>
+<p>QAM: Quadrature Amplitude Modulation-正交幅度调制</p>
+<p><img alt="image-20220618000602347" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618000602347.png" /></p>
+<h2 id="_13">编码</h2>
+<ul>
+<li>NRZ-L(Nonreturn-to-Zero-Level)：高电平表示0，低电平表示1</li>
+<li>NRZI(Nonreturn-to-Zero Inverted)：与上一位相同表示0，相较上一位翻转表示1</li>
+<li>Manchester：一段时间间隔内，由高电位到低电位表示0，由低电位到高电位表示1，此时电平跳变还充当了时钟同步的功能。</li>
+</ul>
+<p><img alt="image-20220618143310666" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618143310666.png" /></p>
+<p>模拟信号数字化的过程：PCM(Pulse Code Modulation)，脉冲编码调制，分为采样（Sampling）、量化（Quantizing）、编码（Encoding）三个步骤。</p>
+<p><img alt="image-20220618233521641" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618233521641.png" /></p>
+<h1 id="_14">复用</h1>
+<p>Multiplexing，利用一条信号同时传输多条信号的内容。</p>
+<h2 id="_15">频分复用</h2>
+<p>FDM(Frequency Division Multiplexing)，通过频率的不同进行复用</p>
+<p><img alt="image-20220618004508014" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618004508014.png" /></p>
+<h2 id="_16">波分复用</h2>
+<p>WDM(Wavelength Division Multiplexing)，通过波长的不同进行复用</p>
+<p><img alt="image-20220618004538058" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618004538058.png" /></p>
+<h2 id="_17">时分复用</h2>
+<p>TDM(Time Division Multiplexing)，将信道分时服用。上游信号分配到的时间固定为同步TDM(Synchronous TDM)，根据实际情况动态分配为统计TDM(Statistical TDM)</p>
+<p><img alt="image-20220618005225937" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618005225937.png" /></p>
+<h2 id="_18">码分复用</h2>
+<p>CDM(Code Division Multiplexing)，通过编码方式的不同进行复用，也称作CDMA(Code Division Multiple Access)</p>
+<p># 实例：电话网</p>
+<p>PSTN(Public Switched Telephone Network)，利用交换机串联不同路线。</p>
+<p><img alt="截屏2022-06-18 22.25.31" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/%E6%88%AA%E5%B1%8F2022-06-18%2022.25.31.png" /></p>
+<p>用于数字信号、模拟信号之间转换的设备：Codec：编码解码器。Modem：调制解调器</p>
+<h2 id="_19">时分复用</h2>
+<p>PSTN使用时分复用使得能同时传输多路信号：</p>
+<p><img alt="image-20220618224707229" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618224707229.png" /></p>
+<h1 id="_20">实例：电视网</h1>
+<p>ADSL(Asymmetric Digital Subscriber Lines)</p>
+<h2 id="_21">频分复用</h2>
+<p>利用频分复用，使得电话数据、网络数据共用信号线传输</p>
+<p><img alt="image-20220618224401726" src="../media/%E7%89%A9%E7%90%86%E5%B1%82/image-20220618224401726.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>
