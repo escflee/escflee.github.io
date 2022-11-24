@@ -1,4 +1,9 @@
 site_name: escflee
 
 theme:
-    name: material
+  name: material
+
+nav:
+  - 课程:
+    - 操作系统:
+      - 文件管理: 课程/操作系统/文件管理.md
