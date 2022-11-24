@@ -11,6 +11,10 @@ nav:
     - 编译原理:
       - 语法分析: 课程/编译原理/语法分析.md
 
+markdown_extensions:
+  - pymdownx.arithmatex: # latex支持
+      generic: true
+
 extra_javascript:
   # latex支持
   # check https://squidfunk.github.io/mkdocs-material/reference/mathjax/?h=math for more information
