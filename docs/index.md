@@ -1,17 +1,7 @@
-# Welcome to MkDocs
+# Welcome
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+这里一个我用来记些笔记的地方。如果你无意中找到这里，你很幸运，不过这里也没什么特别的东西……
 
-## Commands
+网站基于mkdocs-material构建。这玩意难以置信的简单，可以用它轻松的把md文件形式的笔记转化为html博客，可配置项也很丰富。网站的发布基于github-pages，算是在白嫖微软的服务器吧。
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+写的笔记有很多，但大部分都来不及写完，所以没有把他们添加到目录中，不过是可以搜索到的。
