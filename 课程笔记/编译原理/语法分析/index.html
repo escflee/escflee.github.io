@@ -1,0 +1,1309 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>语法分析 - escflee的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="escflee的博客" class="md-header__button md-logo" aria-label="escflee的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            escflee的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              语法分析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="escflee的博客" class="md-nav__button md-logo" aria-label="escflee的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    escflee的博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          课程笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          课程笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_1" type="checkbox" id="__nav_1_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_1">
+          算法设计与分析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法设计与分析" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          算法设计与分析
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/%E4%B8%BB%E5%AE%9A%E7%90%86/" class="md-nav__link">
+        主定理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_2" type="checkbox" id="__nav_1_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_2">
+          操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="操作系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        文件管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_3" type="checkbox" id="__nav_1_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_3">
+          编译原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译原理" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          编译原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" class="md-nav__link">
+        词法分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          语法分析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        语法分析
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    功能
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分析顺序
+  </a>
+  
+    <nav class="md-nav" aria-label="分析顺序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    自顶向下的分析方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    自底向上的分析方法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    错误处理
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_4">
+          数据库
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="数据库" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          数据库
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/SQL/" class="md-nav__link">
+        SQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        关系模型
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          编程语言
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编程语言" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          编程语言
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          C
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          C
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/C%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        C基础
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          C++
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C++" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          C++
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%2B%2B/C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        C++基础
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%2B%2B/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        面向对象程序设计
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          算法题
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法题" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          算法题
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          典型算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="典型算法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          典型算法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AE%97%E6%B3%95%E9%A2%98/%E5%85%B8%E5%9E%8B%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" class="md-nav__link">
+        排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AE%97%E6%B3%95%E9%A2%98/%E5%85%B8%E5%9E%8B%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/" class="md-nav__link">
+        搜索
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    功能
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分析顺序
+  </a>
+  
+    <nav class="md-nav" aria-label="分析顺序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    自顶向下的分析方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    自底向上的分析方法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    错误处理
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">功能<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>以词法分析得到的记号序列为输入，构建分析树。与此同时还要进行语法检查、错误处理。</p>
+<h2 id="_3">分析顺序<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>分析时对输入符号串的扫描是自左向右进行的，记为L。对于自顶向下的分析方法，构造出的是一个最左推导序列，因此记为LL。而对于自底向上的分析方法，构造出的是一个最右推导的逆过程，因此记为LR。</p>
+<h3 id="_4">自顶向下的分析方法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>以由顶向下的顺序构造分析树。如：对于文法</p>
+<p><span class="arithmatex">\(S→aAcBe\)</span>
+<span class="arithmatex">\(A→b|Ab\)</span>
+<span class="arithmatex">\(B→d\)</span></p>
+<p>一个自顶向下的分析序列为：</p>
+<p><span class="arithmatex">\(S→aAcBe→aAbcBe→abbcBe→abbcde\)</span></p>
+<p>是一个最左推导。</p>
+<h3 id="_5">自底向上的分析方法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>以自底向上的顺序构造分析树，如一个自底向上的分析序列为：</p>
+<p><span class="arithmatex">\(abbcde→aAbcde→aAcde→aAcBe→S\)</span></p>
+<p>是一个最右推导的逆过程。</p>
+<h2 id="_6">错误处理<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>紧急恢复：发现错误后不断丢弃输入符号，直到向前指针指向某个定界符，如分号、块结束标识END等。</li>
+<li>短语级恢复：对剩余输入符号串的前缀进行局部修改，使得其可以满足语法分析程序的继续。如将逗号改为分号，去除多余的逗号等。</li>
+<li>出错产生式：扩充语法，直接对错误进行识别，然后进行相应处理。</li>
+<li>全局纠正：尝试找出能使分析程序继续下去的最少的对剩余输入串的修改。难以实现。</li>
+</ul>
+<h1 id="_7">自顶向下分析<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<p>模拟生成树从上到下的构造过程，有不看输入符号串，枚举不同推导方式的递归下降分析，以及通过向前看若干个符号，每一步都得到唯一确定的推导方式的预测分析。</p>
+<h2 id="_8">递归下降分析<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>本质上就是枚举文法的所有情况找到符合输入符号串的分析树。过程中需要不断试探、回溯，效率太低，极少采用。</p>
+<h2 id="_9">消除回溯<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>为了得到效率更高的分析方法，首先要消除回溯。要消除回溯，首先要修改文法，使得分析过程的每一步都是确定的。这要求文法:
+- 不含二义性
+- 不含左递归
+- 每个非终结符号的所有推导，开头的终结符两两互不相交。即：对于每一个产生式<span class="arithmatex">\(A \rightarrow \alpha_1\left|\alpha_2\right| \ldots \mid \alpha_n\)</span>，有<span class="arithmatex">\(\operatorname{FIRST}\left(\alpha_{\boldsymbol{i}}\right) \cap \operatorname{FIRST}\left(\alpha_{\boldsymbol{j}}\right)=\phi \quad(\mathbf{i} \neq \mathbf{j})\)</span></p>
+<h3 id="_10">概念<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li>FIRST集</li>
+</ul>
+<p><span class="arithmatex">\(FIRST\left(\alpha_i\right)=\left\{a \mid \alpha_i \stackrel{*}{\rightarrow} a \beta, a \in V_T, \alpha_i 、 \beta \in\left(V_T \cup V_N\right)^*\right\}\)</span></p>
+<p>如果<span class="arithmatex">\(\alpha_i \stackrel{*}{\Rightarrow} \varepsilon\)</span>，则规定<span class="arithmatex">\(\varepsilon \in FIRST \left(\alpha_i\right)\)</span></p>
+<ul>
+<li>FOLLOW集</li>
+</ul>
+<p><span class="arithmatex">\(FOLLOW(A)=\left\{a \mid S \stackrel{*}{\Rightarrow} \ldots \text { Aa } \ldots, a \in V_T\right\}\)</span></p>
+<h3 id="_11">算法<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>消除左递归：假定关于 <span class="arithmatex">\(A\)</span> 的全部产生式是:
+  $$
+  A \rightarrow A \alpha_1\left| A \alpha_2\right| \ldots\left| A \alpha_{ m }\right| \beta_1\left|\beta_2\right| \ldots \mid \beta_n
+  $$
+  产生式可以改写为:
+  $$
+  \begin{aligned}
+  &amp; A \rightarrow \beta_1 A ^{\prime}\left|\beta_2 A ^{\prime}\right| \ldots \mid \beta_n A ^{\prime} \
+  &amp; A ^{\prime} \rightarrow \alpha_1 A ^{\prime}\left|\alpha_2 A ^{\prime}\right| \ldots\left|\alpha_m A ^{\prime}\right| \varepsilon
+  \end{aligned}
+  $$</p>
+</li>
+<li>
+<p>提取左公因子：若有产生式
+  $$
+  A \rightarrow \alpha \beta_1\left|\alpha \beta_2\right| \ldots\left|\alpha \beta_n\right| \gamma
+  $$
+  可改写为：
+  $$
+  \begin{aligned}
+  &amp; A \rightarrow \alpha A ^{\prime} \mid \gamma \
+  &amp; A ^{\prime} \rightarrow \beta_1\left|\beta_2\right| \ldots \mid \beta_n
+  \end{aligned}
+  $$</p>
+</li>
+</ul>
+<h2 id="_12">递归调用预测分析<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>消除回溯后，一个简单的想法是为每一个非终结符<span class="arithmatex">\(A\)</span>构造其状态转换图，编写其对应的函数，用于识别其句子。该函数每次向前看一个输入符号<span class="arithmatex">\(a\)</span>，选择状态转换图中与之相符的边，</p>
+<ul>
+<li>若边为终结符，则指针后移，读入下一个输入符号。</li>
+<li>若边为非终结符，则调用该非终结符的对应函数。</li>
+<li>若不存在符合的边，则若生成式中包含<span class="arithmatex">\(A\rightarrow\varepsilon\)</span>，则结束函数。否则报错。</li>
+</ul>
+<p>上述方法要能够实现，要求每个非终结符的状态转移图中，每个状态节点的射出边都不同名，不存在标记为<span class="arithmatex">\(\varepsilon\)</span>的边，且若存在非终结符边，则该边是唯一射出边。</p>
+<h2 id="_13">非递归预测分析<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>上述方法中，函数间的递归调用会浪费资源，且限制了当状态节点的射出边为非终结符时不能有其他射出边。另一种方法是：利用栈保存文法分析的状态，利用预测分析表决定行为，也就是下面的LL(1)分析方法。</p>
+<h1 id="ll1">LL(1)分析<a class="headerlink" href="#ll1" title="Permanent link">&para;</a></h1>
+<p>LL(1)分析属于非递归预测分析，利用栈和预测分析表完成分析树的构造。L、L、(1)分别表示扫描顺序自左向右、分析顺序为最左推导、每次做决定时向前看一个符号。</p>
+<h2 id="_14">预测分析表<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>行为栈顶非终结符的符号，列为待输入串的首个符号（包括<span class="arithmatex">\(\$\)</span>），内容为需要用到的生成式，如：</p>
+<p><img alt="Image From Chapter+04--语法分析" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/Image%20From%20Chapter%2B04--%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.png" /></p>
+<h2 id="_15">预测分析表的构造<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<h3 id="first">FIRST集合及其构造<a class="headerlink" href="#first" title="Permanent link">&para;</a></h3>
+<ul>
+<li>FIRST集的定义：开头终结符号的集合<strong>（包括<span class="arithmatex">\(\varepsilon\)</span>）</strong>
+  <span class="arithmatex">\(\operatorname{FIRST}\left(\alpha_i\right)=\left\{a \mid \alpha_i \stackrel{*}{\rightarrow} a \beta, a \in V_{\mathrm{T}}, \alpha_i 、 \beta \in\left(V_{\mathrm{T}} \cup V_{\mathrm{N}}\right)^*\right\}\)</span>
+  如果<span class="arithmatex">\(\alpha_i \stackrel{*}{\Rightarrow} \varepsilon\)</span>，则规定<span class="arithmatex">\(\varepsilon \in FIRST \left(\alpha_i\right)\)</span></li>
+<li>FIRST集的构造</li>
+<li>若<span class="arithmatex">\(X \in V_T\)</span>，则<span class="arithmatex">\(FIRST(X)=\{X\}\)</span></li>
+<li>若 <span class="arithmatex">\(X \in V_N\)</span>, 且有产生式 <span class="arithmatex">\(X \rightarrow a . .\)</span>，其中 <span class="arithmatex">\(a \in V_T\)</span>, 则把 <span class="arithmatex">\(a\)</span> 加入到<span class="arithmatex">\(FIRST(X)\)</span>中</li>
+<li>若 <span class="arithmatex">\(X \rightarrow \varepsilon\)</span> 也是产生式, 则 <span class="arithmatex">\(\varepsilon\)</span> 也加入到<span class="arithmatex">\(FIRST(X)\)</span>中</li>
+<li>若 <span class="arithmatex">\(X \rightarrow Y \ldots\)</span> 是产生式, 且 <span class="arithmatex">\(Y \in V_N\)</span> ，则把<span class="arithmatex">\(FIRST(Y)\)</span> 中的所有非<span class="arithmatex">\(\varepsilon\)</span>元素加入到<span class="arithmatex">\(FIRST(X)\)</span>中</li>
+<li>若 <span class="arithmatex">\(X \rightarrow Y_1 Y_2 \ldots Y_k\)</span> 是产生式, 如果对某个 <span class="arithmatex">\(i\)</span>，
+    <span class="arithmatex">\(FIRST\left(Y_1\right)、 FIRST\left(Y_2\right)、\ldots、FIRST\left(Y_{i-1}\right)\)</span> 都含有 <span class="arithmatex">\(\varepsilon\)</span>, 即 <span class="arithmatex">\(Y_1 Y_2 \ldots Y_{i-1} \stackrel{*}{\Rightarrow} \varepsilon\)</span>,
+    则把<span class="arithmatex">\(FIRST\left(Y_i\right)\)</span> 中的所有非 <span class="arithmatex">\(\varepsilon\)</span> 元素加入到$FIRST(X) $中</li>
+<li>若所有 <span class="arithmatex">\(FIRST\left(Y_i\right)\)</span> 均含有 <span class="arithmatex">\(\varepsilon\)</span>, 其中 <span class="arithmatex">\(i=1、2、\ldots k\)</span>, 则把 <span class="arithmatex">\(\varepsilon\)</span> 加入到<span class="arithmatex">\(FIRST(X)\)</span>中</li>
+</ul>
+<h3 id="follow">FOLLOW集合及其构造<a class="headerlink" href="#follow" title="Permanent link">&para;</a></h3>
+<ul>
+<li>FOLLOW集的定义：尾随的终结符号集合<strong>（包括<span class="arithmatex">\(\$\)</span>，不包括<span class="arithmatex">\(\varepsilon\)</span>）</strong>
+  <span class="arithmatex">\(FOLLOW(A)=\left\{a \mid S \stackrel{*}{\Rightarrow} \ldots \text { Aa } \ldots, a \in V_T\right\}\)</span>
+  若<span class="arithmatex">\(\mathrm{S} \stackrel{*}{\Rightarrow} \ldots \mathrm{A}\)</span>，则规定<span class="arithmatex">\(\$ \in FOLLOW (A)\)</span>，<span class="arithmatex">\(\$\)</span>是输入串结束的标识符</li>
+<li>FOLLOW集的构造</li>
+<li>对文法开始符号S，置<span class="arithmatex">\(\$\)</span>于<span class="arithmatex">\(FOLLOW(S)\)</span>中， <span class="arithmatex">\(\$\)</span>为输入符号串的右尾标志</li>
+<li>若 <span class="arithmatex">\(A \rightarrow \alpha B \beta\)</span> 是产生式, 则把<span class="arithmatex">\(FIRST(\beta)\)</span> 中的所有非 <span class="arithmatex">\(\varepsilon\)</span> 元素加入到<span class="arithmatex">\(FOLLOW(B)\)</span>中</li>
+<li>若 <span class="arithmatex">\(A \rightarrow \alpha B\)</span> 是产生式, 或 <span class="arithmatex">\(A \rightarrow \alpha B \beta\)</span> 是产生式并且 <span class="arithmatex">\(\beta \stackrel{*}{\Rightarrow} \varepsilon\)</span>, 则把<span class="arithmatex">\(FOLLOW(A)\)</span>中的所有元素加入到<span class="arithmatex">\(FOLLOW(B)\)</span>中</li>
+<li>重复此过程, 直到所有集合不再变化为止</li>
+</ul>
+<h3 id="_16">预测分析表的构造<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p>for (文法G的每个产生式A→<span class="arithmatex">\(\alpha\)</span>)
+{
+    for (每个终结符号<span class="arithmatex">\(a \in FIRST(\alpha)\)</span>)
+        把<span class="arithmatex">\(A→\alpha\)</span>放入<span class="arithmatex">\(M[A, a]\)</span>中;
+    if (<span class="arithmatex">\(\varepsilon \in FIRST(\alpha)\)</span>)
+        for (任何 <span class="arithmatex">\(b\in FOLLOW(A)\)</span>)
+            把 <span class="arithmatex">\(A→\alpha\)</span>放入<span class="arithmatex">\(M[A, b]\)</span>中;
+}
+for (所有无定义的<span class="arithmatex">\(M[A, a]\)</span>)
+    标上错误标志;</p>
+<h2 id="_17">预测分析控制程序<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<p>首先将<span class="arithmatex">\(\$\)</span>入栈，再将起始符号<span class="arithmatex">\(S\)</span>入栈。</p>
+<p>然后根据循环下列过程：记栈顶符号为X，待输入串第一个符号为a</p>
+<ul>
+<li>若X为终结符且X==a，则该符号退栈，输入指针前移</li>
+<li>若X为终结符且X!=a，出错</li>
+<li>若X=a=<span class="arithmatex">\(\$\)</span>，则分析成功</li>
+<li>若X为非终结符，则访问分析表M[X,a]</li>
+<li>M[X,a]为<span class="arithmatex">\(\varepsilon\)</span>，则将X退栈</li>
+<li>M[X,a]不为<span class="arithmatex">\(\varepsilon\)</span>，<span class="arithmatex">\(M[X, a]=X→Y_1Y_2...Y_n\)</span>，则将生成式右部符号反向入栈，即<span class="arithmatex">\(Y_1\)</span>最终会在栈顶</li>
+<li>M[X,a]不存在，出错</li>
+</ul>
+<h2 id="_18">错误处理<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<ul>
+<li>X为终结符且X!=a：将X弹出</li>
+<li>X为非终结符但M[X,a]不存在：若a在X的FOLLOW集中，则弹出X，否则跳过a。可以通过在分析表中加入同步化信息实现：对于<span class="arithmatex">\(A\in V_N\)</span>，<span class="arithmatex">\(b\in FOLLOW(A)\)</span>，若M[A, b]为空，则加入“synch”。</li>
+</ul>
+<h2 id="ll1_1">LL(1)文法<a class="headerlink" href="#ll1_1" title="Permanent link">&para;</a></h2>
+<p>利用上述方法构造预测分析表后，表中不为空的每一项都是唯一的，则该文法为LL(1)文法。也可以用以下规则判断：</p>
+<p>一个文法是LL(1)文法，当且仅当它的每一个产生式<span class="arithmatex">\(A→\alpha\mid\beta\)</span>，满足:</p>
+<ul>
+<li><span class="arithmatex">\(FIRST(\alpha) \cap FIRST(\beta)=\phi\)</span>，并且</li>
+<li>若 <span class="arithmatex">\(\beta\)</span> 推导出 <span class="arithmatex">\(\varepsilon\)</span>, 则<span class="arithmatex">\(FIRST(\alpha) \cap FOLLOW(A)=\phi\)</span></li>
+</ul>
+<h1 id="_19">自底向上分析法<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h1>
+<p>基本思想是由输入串出发，每次规约一个最左直接短语，最终得到起始符号，从而得到分析树，本质上是最右推导的逆过程。</p>
+<h2 id="_20">概念<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h2>
+<h3 id="_21">句型，句子和语言<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<ul>
+<li>一个文法推导过程中可能出现的符号序列为句型。最左推导得到的是左句型，最右推导得到的是右句型</li>
+<li>仅含有终结符号的句型是文法的一个句子</li>
+<li>文法所能产生的所有句子的集合称为语言</li>
+</ul>
+<h3 id="_22">短语，直接短语和句柄<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<ul>
+<li>文法推导过程中某个非终结符号经过若干次推导得到的符号序列称为短语。推导次数为1的称为直接短语。即：对于文法 <span class="arithmatex">\(G =\left( V _{ T }, V _{ N }, S , \varphi\right)\)</span>，假定 <span class="arithmatex">\(\alpha \beta \delta\)</span> 是文法 <span class="arithmatex">\(G\)</span> 的一个句型, 如果存在:
+  $$
+  S \stackrel{<em>}{\Rightarrow} \alpha A \delta \text {, 并且 } A \stackrel{+}{\Rightarrow} \beta
+  $$
+  则称 <span class="arithmatex">\(\beta\)</span> 是句型 <span class="arithmatex">\(\alpha \beta \delta\)</span> 关于非终结符号 <span class="arithmatex">\(A\)</span> 的短语。
+  如果存在:
+  $$
+  S \stackrel{</em>}{\Rightarrow} \alpha A \delta, \text { 并且 } A \Rightarrow \beta
+  $$
+  则称 <span class="arithmatex">\(\beta\)</span> 是句型 <span class="arithmatex">\(\alpha \beta \delta\)</span> 关于非终结符号 <span class="arithmatex">\(A\)</span> 的直接短语。</li>
+<li>一个句型的最左直接短语称为该句型的句柄。也就是最左推导中每一步由非终结符得到的生成式</li>
+</ul>
+<h3 id="_23">规范推导，规范规约<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<ul>
+<li>最右推导也被叫做规范推导</li>
+<li>规范推导的逆过程即为规范规约，也就是从输入的句子开始，每次将句柄替换为相应的左部符号，最终得到起始符号的序列。</li>
+</ul>
+<h2 id="-">移进-规约分析方法<a class="headerlink" href="#-" title="Permanent link">&para;</a></h2>
+<p>利用一个栈存储待处理的符号。逐个移入输入符号，当栈顶符号串形成某个产生式的一个候选式时，在一定条件下进行规约，直到不可规约未知。然后继续移入输入符号，重复这一过程。</p>
+<h1 id="lr">LR分析方法<a class="headerlink" href="#lr" title="Permanent link">&para;</a></h1>
+<p>LR分析方法采用移进-规约的方法，按照最右推导的逆过程自底向上构造分析树。与LL分析方法相比，LR不要求对文法做消除左递归、提取左公因子的处理，仅要求对文法进行拓广。</p>
+<h2 id="lrk">LR(k)的含义<a class="headerlink" href="#lrk" title="Permanent link">&para;</a></h2>
+<ul>
+<li>L：自左到右输入符号串</li>
+<li>R：为输入符号串构造最右推导的逆过程</li>
+<li>k：为做出分析决定，在已经入栈的符号的基础上提前看的未入栈输入符号的个数</li>
+</ul>
+<h2 id="lr_1">LR分析程序<a class="headerlink" href="#lr_1" title="Permanent link">&para;</a></h2>
+<p>所有的LR分析方法都是通过这样的方式进行的，包括LR(0)、SLR(1)、LR(1)、LALR(1)等，区别仅仅在于分析表的构造方式不同。分析程序的工作流程如下：首先需要得到文法的分析表，包括两部分：</p>
+<ul>
+<li>action表，存储动作信息，行、列分别为状态、终结符。分析开始时，初始的二元式为: <span class="arithmatex">\(\left( S _0, a_1 a_2 \ldots a_n \$\right)\)</span>。分析过程中每步的结果, 均可表示为如下的二元式<span class="arithmatex">\(\left(S_0 S_1 S_2 \ldots S_m, a_i a_{i+1} \ldots a_n \$\right)\)</span>。</li>
+<li>若 <span class="arithmatex">\(\operatorname{action}\left[ S _{ m }, a _{ i }\right]=\operatorname{shift} S , S =\operatorname{goto}\left[ S _{ m }, a _{ i }\right]\)</span>，则二元式变为: <span class="arithmatex">\(\left(S_0 S_1 \ldots S_m S, a_{i+1} \ldots a_n \$\right)\)</span></li>
+<li>若action <span class="arithmatex">\(\left[ S _{ m }, a _{ i }\right]=\)</span> reduce by <span class="arithmatex">\(A \rightarrow \beta\)</span>，则二元式变为: <span class="arithmatex">\(\left(S_0 S_1 \ldots S_{m-r} S, a_i a_{i+1} \ldots a_n \$\right)\)</span>，<span class="arithmatex">\(S=goto[S_{m-r},A]\)</span></li>
+<li>若 action <span class="arithmatex">\(\left[ S _{ m }, a _{ i }\right]=\operatorname{accept}\)</span> （接受），则分析成功, 二元式变化过程终止</li>
+<li>若 action <span class="arithmatex">\(\left[ S _{ m }, a _{ i }\right]=\)</span> error （出错），则发现错误, 调用错误处理程序</li>
+<li>goto表，存储状态转移信息，行为状态，列为非终结符</li>
+</ul>
+<p>LR分析控制程序如下：</p>
+<p>输入: 文法 <span class="arithmatex">\(G\)</span> 的一张分析表和一个输入符号串 <span class="arithmatex">\(\omega\)</span>
+输出: 若 <span class="arithmatex">\(\omega \in L ( G )\)</span>, 得到 <span class="arithmatex">\(\omega\)</span> 的自底向上的分析, 否则报错
+方法：开始时, 初始状态 <span class="arithmatex">\(S _0\)</span> 在栈顶, <span class="arithmatex">\(\omega \$\)</span> 在输入缓冲区中。置 ip 指向第一个符号;
+do {//S是栈顶状态, a是 ip 所指向的符号
+    if (action[S,a]==shift <span class="arithmatex">\(S ^{\prime}\)</span>)
+    {
+        把 <span class="arithmatex">\(a\)</span> 和 <span class="arithmatex">\(S ^{\prime}\)</span> 分别压入符号栈和状态栈;
+        推进ip, 使它指向下一个符号;
+    }
+    else if(action[S, a]=reduce by <span class="arithmatex">\(A \rightarrow \beta\)</span>)
+    {
+        从栈顶弹出 <span class="arithmatex">\(|\beta|\)</span> 个符号;//令<span class="arithmatex">\(S^{\prime}\)</span>是现在的栈顶状态
+        把 <span class="arithmatex">\(A\)</span> 和goto[<span class="arithmatex">\(S ^{\prime},A\)</span>]分别压入符号栈和状态栈;
+        输出<span class="arithmatex">\(A \rightarrow \beta\)</span>;
+    }
+    else if(action[S, a]==accept)
+        return;
+    else error();
+} while(1);</p>
+<p>LR分析的例子：对于文法</p>
+<ol>
+<li><span class="arithmatex">\(E \rightarrow E+T\)</span></li>
+<li><span class="arithmatex">\(E \rightarrow T\)</span></li>
+<li><span class="arithmatex">\(T \rightarrow T * F\)</span></li>
+<li><span class="arithmatex">\(T \rightarrow F\)</span></li>
+<li><span class="arithmatex">\(F \rightarrow(E)\)</span></li>
+<li><span class="arithmatex">\(F \rightarrow id\)</span></li>
+</ol>
+<p>分析表为：</p>
+<p><img alt="image-20221022163037180" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/image-20221022163037180.png" /></p>
+<p>分析过程为：</p>
+<p><img alt="image-20221022163108965" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/image-20221022163108965.png" /></p>
+<p><img alt="image-20221022163127072" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/image-20221022163127072.png" /></p>
+<h1 id="lr0slr1">LR(0)和SLR(1)分析方法<a class="headerlink" href="#lr0slr1" title="Permanent link">&para;</a></h1>
+<h2 id="lr0">LR(0)项目<a class="headerlink" href="#lr0" title="Permanent link">&para;</a></h2>
+<p>在产生式内加入原点用来间隔已入栈和未入栈的部分。如：</p>
+<p><span class="arithmatex">\(A→•XYZ\)</span>表示<span class="arithmatex">\(XYZ\)</span>均未入栈。<span class="arithmatex">\(A→X•YZ\)</span>表示只有<span class="arithmatex">\(X\)</span>已入栈。<span class="arithmatex">\(A→XYZ•\)</span>表示<span class="arithmatex">\(XYZ\)</span>均已入栈。</p>
+<p>这样表示之后可以更方便的得到分析程序下一步应该完成的工作。确定选择哪个生成式后：</p>
+<ul>
+<li>对于原点在最右侧的，进行规约，也就是弹出栈顶生成式右边的符号，得到一个新的非终结符等待入栈。（<strong>规约项目</strong>）</li>
+<li>圆点后第一个符号是终结符，则将该终结符入栈。（<strong>移进项目</strong>）</li>
+<li>圆点后第一个符号是非终结符的，表示还需要移进若干个符号，规约得到这个非终结符。规约得到这个非终结符后，再将它入栈。（<strong>待约项目</strong>）</li>
+<li>特殊情况，如果规约得到的是非终结符是起始符号，就表示整个输入符号已经处理完了，且符合文法。这时应接受该符号串。（<strong>接受项目</strong>）</li>
+</ul>
+<p>另一个特殊情况是对于产生式<span class="arithmatex">\(A→\varepsilon\)</span>，它的LR(0)项目只有一个：规约项目<span class="arithmatex">\(A→•\)</span>。</p>
+<h2 id="_24">拓广文法<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h2>
+<p>为了使得文法只有一个接受项目，对文法进行拓广：用<span class="arithmatex">\(S'\)</span>代替原起始符号<span class="arithmatex">\(S\)</span>，增加文法<span class="arithmatex">\(S'→S\)</span>，这样文法的接受项目就只有一个：<span class="arithmatex">\(S'→S•\)</span>。</p>
+<h2 id="_25">活前缀，有效项目，有效项目集<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h2>
+<p>下面问题就来了，如何确定每一状态下应该用什么生成式呢？在LR(0)中，只能根据已经入栈的符号来确定，如：若已经入栈的符号是<span class="arithmatex">\(a*\)</span>，那要用到的肯定是乘法相关的生成式，进行移入。如果已经入栈的符号是<span class="arithmatex">\(a*(b+c)\)</span>，那要用到的肯定是括号相关的生成式，进行规约。</p>
+<p>下面引入概念：活前缀就是规范句型中，不包含句柄以后的任何符号的前缀。这个活前缀可能用到的所有LR(0)项目，都称为这个活前缀的LR(0)有效项目。即：项目 <span class="arithmatex">\(A \rightarrow \beta_1 \bullet \beta_2\)</span> 对活前缀 <span class="arithmatex">\(\gamma=\alpha \beta_1\)</span> 是有效的，如果存在一个规范推导：<span class="arithmatex">\(S \stackrel{*}{\Rightarrow} \alpha A \omega \Rightarrow \alpha \beta_1 \beta_2 \omega\)</span>。某个活前缀的所有有效项目组成的集合称作其LR(0)有效项目集。</p>
+<ul>
+<li>推广：若项目 <span class="arithmatex">\(A \rightarrow \alpha \cdot B \beta\)</span> 对活前缀 <span class="arithmatex">\(\gamma=\delta \alpha\)</span> 是有效的, 并且有产生式B <span class="arithmatex">\(\rightarrow \eta\)</span>，则项目 <span class="arithmatex">\(B \rightarrow \bullet \eta\)</span> 对活前缀 <span class="arithmatex">\(\gamma=\delta \alpha\)</span> 也是有效的。这很好理解，某个活前缀存在待约项目，那肯定先得有该非终结符对应的移进项目。</li>
+</ul>
+<p>也就是说，活前缀就是规范规约过程中，移入0个或若干个输入符号后就可以做规约了的前缀。这样，只要能把所有的活前缀进行分类，把所有有效项目集相同的活前缀集合到一起，就可以方便确定后续应该使用哪条LR(0)项目了。</p>
+<h2 id="closure">闭包closure<a class="headerlink" href="#closure" title="Permanent link">&para;</a></h2>
+<p>只知道某个状态下的初始LR(0)项目，如初始状态下只知道一个LR(0)项目<span class="arithmatex">\(S'→•S\)</span>，怎么得到这个状态的有效项目集呢？不断利用上面的推广算法，存在圆点后是非终结符的生成式，则将该非终结符对应的所有生成式加入进来，不断重复直到集合不再增加为止。这就是闭包。</p>
+<h2 id="go">转移函数go<a class="headerlink" href="#go" title="Permanent link">&para;</a></h2>
+<p>若<span class="arithmatex">\(I\)</span>是文法<span class="arithmatex">\(G\)</span>的一个<span class="arithmatex">\(LR(0)\)</span>项目集, <span class="arithmatex">\(X\)</span> 是一个文法符号, 定义<span class="arithmatex">\(go(I, X) =closure(J)\)</span>，其中<span class="arithmatex">\(J =\{ A \rightarrow \alpha X \cdot \beta \mid 当 A \rightarrow \alpha \cdot X \beta 属于I时 \}\)</span> 。即若<span class="arithmatex">\(I\)</span>中的项目<span class="arithmatex">\(A \rightarrow \alpha \cdot X \beta\)</span>是某个活前缀<span class="arithmatex">\(\gamma=\delta \alpha\)</span>的有效项目， <span class="arithmatex">\(J\)</span> 中的项目<span class="arithmatex">\(A \rightarrow \alpha X \cdot \beta\)</span>是活前缀<span class="arithmatex">\(\delta \alpha X\)</span> （即 <span class="arithmatex">\(\gamma X\)</span> ）的有效项目。</p>
+<p><span class="arithmatex">\(go ( I , X )\)</span> 称为转移函数，项目 <span class="arithmatex">\(A \rightarrow \alpha \text{X} \cdot \beta\)</span> 称为 <span class="arithmatex">\(A \rightarrow \alpha \cdot X \beta\)</span> 的后继。</p>
+<p>也就是说，若活前缀<span class="arithmatex">\(\alpha\)</span>的有效项目集是<span class="arithmatex">\(I\)</span>，则活前缀<span class="arithmatex">\(\alpha X\)</span>的有效项目集是<span class="arithmatex">\(go(I,X)\)</span>。<span class="arithmatex">\(go(I,X)\)</span>的求法为：筛选出<span class="arithmatex">\(I\)</span>中圆点后的符号是<span class="arithmatex">\(X\)</span>的项目，将他们的圆点移到<span class="arithmatex">\(X\)</span>后，再做闭包。</p>
+<h2 id="lr0dfa">LR(0)项目集规范族及识别活前缀的DFA<a class="headerlink" href="#lr0dfa" title="Permanent link">&para;</a></h2>
+<p><span class="arithmatex">\(LR(0)\)</span>项目集规范族：文法 <span class="arithmatex">\(G\)</span> 的所有<span class="arithmatex">\(LR(0)\)</span>有效项目集组成的集合称为<span class="arithmatex">\(G\)</span>的<span class="arithmatex">\(LR(0)\)</span>项目集规范族。</p>
+<p>以活前缀<span class="arithmatex">\(\varepsilon\)</span>的有效项目集为起始构造识别活前缀的DFA：以已有的有效项目集为起点，对这些项目集中的每一个<span class="arithmatex">\(I\)</span>，以<span class="arithmatex">\(I\)</span>中所有圆点后的符号<span class="arithmatex">\(X\)</span>为转移，添加<span class="arithmatex">\(go(I,X)\)</span>到DFA中，不断重复直至DFA不再扩张。</p>
+<p>如：对于文法<span class="arithmatex">\(S \rightarrow a A|b B \quad A \rightarrow c A| d \quad B \rightarrow c B \mid d\)</span>，构造的识别所有活前缀的DFA为：</p>
+<p><img alt="image-20221022152335984" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/image-20221022152335984.png" /></p>
+<p>构造的过程是首先以活前缀<span class="arithmatex">\(\varepsilon\)</span>的有效项目集<span class="arithmatex">\(I_0\)</span>为起始，添加<span class="arithmatex">\(go(I_0,S),go(I_0,a),go(I_0,b)\)</span>，也就是<span class="arithmatex">\(I_1,I_2,I_3\)</span>。然后继续以<span class="arithmatex">\(I_1,I_2,I_3\)</span>为起点，得到<span class="arithmatex">\(I_4,I_5,I_6,I_7,I_8,I_9\)</span>。然后类似，构建完成整张DFA。</p>
+<h2 id="slr1lr0">冲突，SLR(1)，LR(0)<a class="headerlink" href="#slr1lr0" title="Permanent link">&para;</a></h2>
+<p>DFA构建完成后，可能存在冲突，例如对于项目集<span class="arithmatex">\(I =\{ X \rightarrow \alpha \bullet b \beta, \quad A \rightarrow \alpha \bullet, \quad B \rightarrow \beta \bullet\}\)</span>，存在：</p>
+<ul>
+<li>移进-规约冲突：不知道应该移进b还是规约为A或B</li>
+<li>规约-规约冲突：不知道应该规约为A还是B</li>
+</ul>
+<p>如果出现这样的问题，那么不向前看任何符号的LR(0)分析方法是解决不了的。一个缓兵之计是通过FOLLOW集来进行区分，如上面的例子中若A、B的FOLLOW集不存在交集，问题就得到了解决。这种解决办法是通过简单的向前看一个符号来达到的，因此称作SLR(1)分析方法。</p>
+<p>如果没有这样的问题，那文法就可以通过LR(0)分析方法解决，也就是，文法的每个有效项目集都满足：要么所有元素都是移进-待约项目，要么只含有唯一的规约项目。</p>
+<h2 id="slr1">构建SLR(1)分析表<a class="headerlink" href="#slr1" title="Permanent link">&para;</a></h2>
+<ol>
+<li>构造 <span class="arithmatex">\(G ^{\prime}\)</span> 的 <span class="arithmatex">\(L R ( 0 )\)</span> 项目集规范族 <span class="arithmatex">\(C =\left\{ I _0, I _1, \ldots, I _{ n }\right\}\)</span> 。</li>
+<li>对于状态<span class="arithmatex">\(i\)</span>(对应于项目集<span class="arithmatex">\(I_i\)</span>的状态)的分析动作如下：
+a) 若 <span class="arithmatex">\(A \rightarrow \alpha \cdot a \beta \in I_i\)</span>，<span class="arithmatex">\(a\)</span>为终结符，且 <span class="arithmatex">\(g o\left(I_i, a\right)=I_j\)</span>, 则置 <span class="arithmatex">\(\operatorname{action}[i, a]=S j\)</span>，表示移入栈一个符号，与此同时将状态<span class="arithmatex">\(j\)</span>入栈
+b) 若 <span class="arithmatex">\(A \rightarrow \alpha \cdot \in I _{ i }\)</span>, 则对所有 <span class="arithmatex">\(a \in F O L L O W ( A )\)</span>, 置 <span class="arithmatex">\(\operatorname{action}[ i , a ]= R \quad A \rightarrow \alpha\)</span>，表示利用生成式<span class="arithmatex">\(A \rightarrow \alpha\)</span>进行规约。
+c) 若 <span class="arithmatex">\(S ^{\prime} \rightarrow S \in \in I _{ i }\)</span>, 则置 <span class="arithmatex">\(\operatorname{action}[ i , S ]= A C C\)</span>，表示分析成功</li>
+<li>若 <span class="arithmatex">\(\operatorname{go}\left( I _{ i }, A \right)= I _{ j }\)</span>，<span class="arithmatex">\(A\)</span> 为非终结符，则置 <span class="arithmatex">\(\operatorname{goto}[ i , A ]= j\)</span></li>
+<li>分析表中凡不能用规则 <span class="arithmatex">\(2 、 3\)</span> 填入信息的空白表项, 均置出错标志 error。</li>
+<li>分析程序的初态是包含项目 <span class="arithmatex">\(S ^{\prime} \rightarrow S\)</span> 的有效项目集所对应的状态。</li>
+</ol>
+<p>构建完成的表若不存在冲突，那么得到的就是一张SLR(1)分析表，文法是SLR(1)文法。</p>
+<h1 id="lr1lalr1">LR(1)和LALR(1)分析方法<a class="headerlink" href="#lr1lalr1" title="Permanent link">&para;</a></h1>
+<h2 id="lrk_1">LR(k)项目<a class="headerlink" href="#lrk_1" title="Permanent link">&para;</a></h2>
+<p><span class="arithmatex">\(L R ( k )\)</span> 项目: <span class="arithmatex">\(\left[ A \rightarrow \alpha \cdot \beta, a _1 a _2 \ldots a _{ k }\right]\)</span></p>
+<ul>
+<li><span class="arithmatex">\(A \rightarrow \alpha \cdot \beta\)</span> 是 <span class="arithmatex">\(L R ( 0 )\)</span> 项目</li>
+<li><span class="arithmatex">\(a_i(i=1,2, \ldots, k)\)</span> 是终结符号</li>
+<li><span class="arithmatex">\(a_1 a_2 \ldots a_k\)</span> 称为该项目的向前看符号串
+  向前看符号串仅对归约项目 <span class="arithmatex">\(\left[ A \rightarrow \alpha \bullet, a _1 a _2 \ldots a _{ k }\right]\)</span> 起作用</li>
+<li>对于规约项目[A <span class="arithmatex">\(\rightarrow \alpha \bullet, \quad a_1 a_2 \ldots a_k\)</span> ]，当它所属项目集对应的状态在栈顶, 且后续的 <span class="arithmatex">\(k\)</span> 个输入符号为 <span class="arithmatex">\(a_1 a_2 \ldots a_k\)</span> 时, 才允许把栈顶的文法符号串 <span class="arithmatex">\(\alpha\)</span> 归约为 <span class="arithmatex">\(A\)</span> 。</li>
+</ul>
+<p>LR(k)在LR(0)和SLR(1)的基础上精细的推测了每个生成式后续可以出现的终结符号，而不是简单的用FOLLOW集来判断，进一步提高了分析能力。</p>
+<h2 id="lr1">LR(1)有效项目，有效项目集，项目集规范族<a class="headerlink" href="#lr1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>LR(1)有效项目：称一个LR(1)项目 <span class="arithmatex">\([ A \rightarrow \alpha \cdot \beta, a ]\)</span> 对活前缀 <span class="arithmatex">\(\gamma=\delta \alpha\)</span> 是有效的, 如果存在一个规范推导:
+  $$
+  S \stackrel{*}{\Rightarrow} \delta A \omega \Rightarrow \delta \alpha \beta \omega
+  $$
+  其中 <span class="arithmatex">\(\omega\)</span> 的第一个符号为 <span class="arithmatex">\(a\)</span>, 或者 <span class="arithmatex">\(\omega=\varepsilon\)</span>, 且 <span class="arithmatex">\(a =\$\)</span> 。</li>
+<li>推广: 若项目 <span class="arithmatex">\([ A \rightarrow \alpha \cdot B \beta, a ]\)</span> 对活前缀 <span class="arithmatex">\(\gamma=\delta \alpha\)</span> 是有效 的, 且有产生式 <span class="arithmatex">\(B \rightarrow \eta\)</span>, 则对任何 <span class="arithmatex">\(b \in F I R S T (\beta a)\)</span>, 项目 <span class="arithmatex">\([ B \rightarrow \bullet \eta, b ]\)</span> 对活前缀 <span class="arithmatex">\(\gamma=\delta \alpha\)</span> 也是有效的。 <span class="arithmatex">\(b\)</span> 或是从 <span class="arithmatex">\(\beta\)</span> 推出的开头终结符号, 若 <span class="arithmatex">\(\beta \Rightarrow \varepsilon\)</span> 则 <span class="arithmatex">\(b = a\)</span> 。</li>
+<li>LR(1)有效项目集：某个活前缀的所有LR(1)有效项目组成的集合。</li>
+<li>LR(1)项目规范族：文法的所有LR(1)有效项目集组成的集合。</li>
+<li>其实都和LR(0)中的定义类似，只是加了一个向前看符号。</li>
+</ul>
+<h2 id="closure_1">闭包closure<a class="headerlink" href="#closure_1" title="Permanent link">&para;</a></h2>
+<p>设<span class="arithmatex">\(I\)</span>是文法 <span class="arithmatex">\(G\)</span> 的一个<span class="arithmatex">\(LR(1)\)</span>项目集，<span class="arithmatex">\(closure(I)\)</span>是从<span class="arithmatex">\(I\)</span>出发，用下面的方法构造的项目集。</p>
+<ol>
+<li><span class="arithmatex">\(I\)</span>中的每一个项目都属于<span class="arithmatex">\(closure(I)\)</span>；</li>
+<li>若项目 <span class="arithmatex">\([ A \rightarrow \alpha \cdot B \beta, a ]\)</span> 属于<span class="arithmatex">\(closure(I)\)</span>，且<span class="arithmatex">\(G\)</span>有产生式<span class="arithmatex">\(B \rightarrow \eta\)</span>，则对任何终结符号<span class="arithmatex">\(b \in \text{FIRST}(\beta a)\)</span>，若项目 <span class="arithmatex">\([ B\rightarrow \bullet \eta, b ]\)</span> 不属于集合 <span class="arithmatex">\(closure(I)\)</span>，则将它加入<span class="arithmatex">\(closure(I)\)</span>；</li>
+<li>重复规则 (2), 直到<span class="arithmatex">\(closure(I)\)</span>不再增大为止。</li>
+</ol>
+<h2 id="go_1">转移函数go<a class="headerlink" href="#go_1" title="Permanent link">&para;</a></h2>
+<p>若<span class="arithmatex">\(I\)</span>是文法<span class="arithmatex">\(G\)</span>的一个LR(1)项目集，<span class="arithmatex">\(X\)</span>是一个文法符号，定义：<span class="arithmatex">\(go(I, X) =closure(J)\)</span>。其中: <span class="arithmatex">\(J =\{[ A \rightarrow \alpha X \cdot \beta, a ] \mid当[ A \rightarrow \alpha \cdot X \beta, a ]属于I时\}\)</span>。
+项目<span class="arithmatex">\([ A \rightarrow \alpha X \cdot \beta, a ]\)</span> 称为 <span class="arithmatex">\([ A \rightarrow \alpha \cdot X \beta, a ]\)</span> 的后继。
+直观含义:
+若<span class="arithmatex">\(I\)</span>是某个活前缀 <span class="arithmatex">\(\gamma\)</span> 的有效项目集,
+则 <span class="arithmatex">\(g o( I , X )\)</span> 便是对活前缀 <span class="arithmatex">\(\gamma X\)</span> 的有效项目集。</p>
+<h2 id="lr1_1">构造LR(1)的项目集规范族<a class="headerlink" href="#lr1_1" title="Permanent link">&para;</a></h2>
+<p>输入：拓广文法<span class="arithmatex">\(G'\)</span>
+输出：<span class="arithmatex">\(G'\)</span>的<span class="arithmatex">\(LR(1)\)</span>项目集规范族
+方法：
+<span class="arithmatex">\(C=\{closure(\{[S ^{\prime} \rightarrow \cdot S , \$ ]\})\}\)</span>
+do
+    for(C中的每一个项目集<span class="arithmatex">\(I\)</span>和每一个文法符号<span class="arithmatex">\(X\)</span>)
+        if(<span class="arithmatex">\(go(I, X)\)</span>不为空,且不在<span class="arithmatex">\(C\)</span>中)
+            把<span class="arithmatex">\(go(I,X)\)</span>加入<span class="arithmatex">\(C\)</span>中;
+while (没有新项目集加入C中).</p>
+<h2 id="lr1_2">构建LR(1)分析表<a class="headerlink" href="#lr1_2" title="Permanent link">&para;</a></h2>
+<p>输入: 拓广文法 <span class="arithmatex">\(G^{\prime} \quad\)</span> 输出: 文法<span class="arithmatex">\(G^{\prime}\)</span>的分析表
+方法如下:
+1. 构造文法<span class="arithmatex">\(G ^{\prime}\)</span>的<span class="arithmatex">\(LR(1)\)</span>项目集规范族<span class="arithmatex">\(C =\left\{ I _0, I _1, \ldots, I _{ n }\right\}\)</span>
+2. 对于状态<span class="arithmatex">\(i\)</span>(代表项目集<span class="arithmatex">\(I_i\)</span>), 分析动作如下:
+a)若<span class="arithmatex">\([A \rightarrow \alpha \cdot a \beta, b] \in I_i\)</span>, 且 <span class="arithmatex">\(g o\left(I_i, a\right)=I_j\)</span>, 则置<span class="arithmatex">\(\operatorname{action}[ i , a]=S j\)</span>
+b)若<span class="arithmatex">\([ A \rightarrow \alpha \cdot, a ] \in I _{ i }\)</span>, 且 <span class="arithmatex">\(A \neq S ^{\prime}\)</span>, 则置 <span class="arithmatex">\(\operatorname{action}[ i , a ]= R j\)</span>
+c)若<span class="arithmatex">\(\left[ S ^{\prime} \rightarrow S \bullet, \$ \right] \in I _i\)</span>, 则置 action <span class="arithmatex">\([ i , \$ ]= A C C\)</span>
+3. 若对非终结符号<span class="arithmatex">\(A\)</span>, 有<span class="arithmatex">\(\operatorname{go}\left(I_i, A \right)=I_j\)</span>, 则置 <span class="arithmatex">\(\operatorname{goto}[ i , A ]= j\)</span>
+4. 凡是不能用上述规则填入信息的空白表项, 均置上出错标志error。
+5. 分析程序的初态是包括 <span class="arithmatex">\(\left[ S ^{\prime} \rightarrow \cdot S , \$\right]\)</span> 的有效项目集所对应的状态。</p>
+<h2 id="lalr1">构建LALR(1)表<a class="headerlink" href="#lalr1" title="Permanent link">&para;</a></h2>
+<p>LR(1)分析能力强，但占用大量存储空间，表内很多内容都是重复的，如：</p>
+<p><img alt="image-20221022203719852" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/image-20221022203719852.png" /></p>
+<ul>
+<li>同心集：如果两个LR(1)项目集去掉搜索符号之后是相同的，则称这两个项目集具有相同的心(core)，即这两个项目集是同心集。如<span class="arithmatex">\(I_3\)</span>和<span class="arithmatex">\(I_6\)</span>。</li>
+<li>项目集的核：项目集中圆点不在最左边的项目，以及初态项目集中的项目<span class="arithmatex">\([S' \rightarrow \bullet S,\$]\)</span>。其实就是构建DFA时每个项目集求闭包时的初始项目。</li>
+</ul>
+<p>LALR(1)表是在LR(1)表上精简得来的。思路是：合并同心集，用核代替项目集。</p>
+<p>同心集的合并可能带来新的规约-规约冲突，这种情况下就无法使用LALR(1)表了，只能老老实实使用笨重的LR(1)表。</p>
+<h1 id="_26">文法分类<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h1>
+<p><img alt="image-20221022204625142" src="../media/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/image-20221022204625142.png" /></p>
+<p>无论是LL还是LR分析方法，都无法处理含有二义性的文法。可以使用消除二义性的方法，如增加运算符之间的优先级、使用最近最后匹配原则等。</p>
+<p>LR分析方法的分析能力要优于LL分析方法。一个简单的理解是，LL分析方法的每次推导根据句柄的前k个符号作出决定，而LR分析方法的每次规约根据整个句柄+句柄后k个符号作出决定，得到的信息更多。也可以根据两种办法对文法的要求理解：LL分析要求消除文法的左递归、提取左公因子，而LR分析并不要求，只需要进行拓广即可。</p>
+<p>至于LL、LR内部的比较，自然是向前看符号越多，分析能力越强悍了。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="../%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 词法分析" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              词法分析
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/SQL/" class="md-footer__link md-footer__link--next" aria-label="下一页: SQL" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              SQL
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+        <script src="../../../mkdocs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

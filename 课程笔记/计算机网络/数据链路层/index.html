@@ -1,0 +1,915 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>数据链路层 - escflee的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="escflee的博客" class="md-header__button md-logo" aria-label="escflee的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            escflee的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数据链路层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="escflee的博客" class="md-nav__button md-logo" aria-label="escflee的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    escflee的博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          课程笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          课程笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_1" type="checkbox" id="__nav_1_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_1">
+          算法设计与分析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法设计与分析" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          算法设计与分析
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/%E4%B8%BB%E5%AE%9A%E7%90%86/" class="md-nav__link">
+        主定理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_2" type="checkbox" id="__nav_1_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_2">
+          操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="操作系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        文件管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_3" type="checkbox" id="__nav_1_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_3">
+          编译原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译原理" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          编译原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" class="md-nav__link">
+        词法分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" class="md-nav__link">
+        语法分析
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_4">
+          数据库
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="数据库" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          数据库
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/SQL/" class="md-nav__link">
+        SQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        关系模型
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          编程语言
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编程语言" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          编程语言
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          C
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          C
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/C%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        C基础
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          C++
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C++" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          C++
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%2B%2B/C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        C++基础
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%2B%2B/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        面向对象程序设计
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          算法题
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法题" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          算法题
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          典型算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="典型算法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          典型算法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AE%97%E6%B3%95%E9%A2%98/%E5%85%B8%E5%9E%8B%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" class="md-nav__link">
+        排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AE%97%E6%B3%95%E9%A2%98/%E5%85%B8%E5%9E%8B%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/" class="md-nav__link">
+        搜索
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">数据链路层<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="_2">成帧<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h2 id="_3">字符计数法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>Character Count，通过在每一帧后面添加该帧的长度来区分帧。缺点在于一旦出现差错，会造成严重后果。</p>
+<h2 id="_4">字节/字符填充<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>Byte(Character)Stuffing，通过特殊的字符/比特串来标记每一帧的开始和结束。</p>
+<h2 id="_5">透明传输<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>为防止数据部分中包含用于标记的控制字符/比特串造成冲突，可以采用以下方法：</p>
+<ul>
+<li>添加标志符ESC，表示忽略后面的特殊符号：</li>
+</ul>
+<p><img alt="image-20220618193554270" src="../media/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/image-20220618193554270.png" /></p>
+<ul>
+<li>改变与控制字段类似的比特串：如若用于标志开始和结束的比特串为0111,1110，则当数据部分中出现连续的五个1时，在后面添加一个0。HDLC中使用。</li>
+</ul>
+<h2 id="_6">物理层编码违例法<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>在物理层，利用并没有开放给使用者使用的特殊编码来标记帧的起始位置，使得标志字段和数据部分不会产生冲突。在Manchester编码中使用。</p>
+<h1 id="_7">差错控制<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<h2 id="_8">海明距离<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Hamming Distance，指两个比特串之间相同位置，但数值不同的位数。对于编码而言，海明距离指编码中任意两个有效码字之间最小的海明距离。</li>
+<li>检测t位错需要海明距离至少为t+1的编码方式。</li>
+<li>纠正t位错需要海明距离至少为2t+1的编码方式。</li>
+<li>要纠正一位错，假设数据部分有m位，校验部分有r位，则应满足<span class="arithmatex">\((m+r+1)2^m\le2^{m+r}\)</span></li>
+</ul>
+<h2 id="_9">海明码<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ul>
+<li>2的幂次位，如第1、2、4、8位为校验位。</li>
+<li>以二进制表示每一位的序号，如第11位可以表示为8+2+1。然后，该位要参与对应校验位的运算，如第11位要参与第1、2、8校验位的计算。</li>
+<li>每个校验位采用偶校验，如对于一个长12位的比特串，第4位b4应该满足：b4⊕b5⊕b6⊕b7⊕b12=0</li>
+<li>海明码的海明距离为3，因为任意一个数据位出错都至少造成三位的改变。可以检出2位错，纠出1位错。</li>
+</ul>
+<p><img alt="image-20220618235326632" src="../media/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/image-20220618235326632.png" /></p>
+<h2 id="crc">CRC校验<a class="headerlink" href="#crc" title="Permanent link">&para;</a></h2>
+<p>CRC(Cyclic Redundancy Check)，循环冗余校验</p>
+<ul>
+<li>多项式编码Polynomial Code：将比特串看作一个多项式，如：</li>
+</ul>
+<p><span class="arithmatex">\(110001=&gt;x^5+x^4+x^0\)</span></p>
+<ul>
+<li>生成多项式：发送方和接收方提前约定的一个多项式，如：</li>
+</ul>
+<p><span class="arithmatex">\(G(x)=10011=x^4+x+x^0\)</span>，该多项式首位必须是1</p>
+<ul>
+<li>
+<p>在多项式算术中，全部按位分别运算，不考虑进位、借位。加减法全部由异或运算代替。</p>
+</li>
+<li>
+<p>发送方编码：</p>
+</li>
+<li>首先根据生成多项式的位数在要校验的比特串后添加0，如5位生成多项式则添加4个0</li>
+<li>然后用添加了0后的比特串除以生成多项式，得到余数</li>
+<li>最后将余数和被除数相加，得到最终要发送的串</li>
+<li>接收方校验：</li>
+<li>用接收到的串除以生成多项式，余数为0表示校验正确</li>
+</ul>
+<p><img alt="image-20220619005355649" src="../media/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/image-20220619005355649.png" /></p>
+<p><img alt="image-20220619005439769" src="../media/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/image-20220619005439769.png" /></p>
+<ul>
+<li>硬件实现：发送方和接收方均为从比特串的起始位置开始计算，一直计算到尾部。因此校验字段放在整个比特串的后部，从而不用储存任何字段，提高效率。</li>
+</ul>
+<h1 id="_10">流量控制<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<h2 id="arq">ARQ<a class="headerlink" href="#arq" title="Permanent link">&para;</a></h2>
+<p>ARQ(Automatic Repeat-reQuest)，自动重传请求，由以下机制构成：</p>
+<ul>
+<li>
+<p>序列号Sequence Number：用于标记帧的序号，防止帧发送过程中乱序、漏传或重传等问题。通常由固定位数的二进制数表示，并循环使用。</p>
+</li>
+<li>
+<p>滑动窗口Sliding Window：发送窗口指发送方可以一次性发送并缓存等待ACK的帧的序号范围。接收窗口指接收方可以同时接收并缓存等待处理的帧的序号范围。接收发送窗口和接收窗口大小的和不应该超过序列号的总个数，否则在特殊情况下会出现错乱，如：序列号为<span class="arithmatex">\(0～2^n-1\)</span>，发送窗口为<span class="arithmatex">\(0～2^{n-1}-1\)</span>，接收窗口为<span class="arithmatex">\(0～2^{n-1}\)</span>，发送窗口全部发送，接收窗口全部接收并移动到<span class="arithmatex">\(2^{n-1}～0\)</span>，但发送的ACK丢失。此时当接收方接收到一个序号为0的帧，将无法区分该帧是旧的序号循环中的0号帧重传，还是新的序号循环中的0号帧。</p>
+</li>
+<li>
+<p>ACK：接收方成功接收到帧后向发送方发送接收到的帧的序列号，采用累计ACK(Cumulative ACK)的形式，如ACK序列号为n表示第n号帧及所有n号帧之前的帧都已成功接收到，这样可以减少ACK的发送次数。</p>
+</li>
+</ul>
+<p>TCP中有所不同：ACK的序号n表示第n帧之前的所有帧都已接收，等待接收第n帧。同时TCP中还加入了选择性的确认的功能，可以在累积ACK的基础上单独确认其他已收到但并不连续的帧。</p>
+<p>发送方在发送每一帧后设置一个定时器，定时器时间内若没有接收到该帧的ACK则自动重传该帧。</p>
+<ul>
+<li>
+<p>Piggybacking：捎带确认，为了提高信道使用效率，ACK尽量和数据帧一起发送，而不是发送一个单独的ACK帧。</p>
+</li>
+<li>
+<p>ACK Timer：和捎带确认一同使用，指当接收方有新的ACK需要发送后启动一个计时器，若计时器期限内没有新的数据要发送，则放弃捎带确认，发送单独的ACK帧。</p>
+</li>
+<li>
+<p>NAK：由于ACK的存在，NAK并不是必要的。NAK是接收方用来通知接收到的帧出错或接收到的帧乱序，促使其立刻重传出错帧的。为防止浪费，发送方会进行记录，确保某一帧因NAK而进行的重传只有一次。</p>
+</li>
+</ul>
+<h2 id="_11">实例<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<ul>
+<li>停止等待协议Stop-and-Wait：发送方和接收方的窗口大小都为1，捎带确认，超时重传。</li>
+<li>回退N步协议Go-Back-N：在停止等待协议的基础上，发送方窗口大小改为大于1，接收方窗口大小为1，超时则从出错的帧开始全部重发。</li>
+<li>选择重传协议Selective-Repeat：在回退N步协议的基础上，发送窗口和接收窗口大小均为<span class="arithmatex">\(2^{n-1}\)</span>，序列号共<span class="arithmatex">\(2^n\)</span>个。增加NAK和ACK Timer。出错时只重传出错帧。</li>
+</ul>
+<h2 id="_12">性能<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>传输一帧数据所需的总时间：传输数据的时间<span class="arithmatex">\(t_{tran}\)</span>+信号从发送方到接收方的时延<span class="arithmatex">\(t_{prop}\)</span>+数据处理时间<span class="arithmatex">\(t_{proc}\)</span>+传输ACK的时间<span class="arithmatex">\(t_{ack}\)</span>+ACK的传输时延<span class="arithmatex">\(t_{prop}\)</span>+ACK处理时间<span class="arithmatex">\(t_{proc}\)</span></p>
+</li>
+<li>
+<p>计算过程中忽略处理时间<span class="arithmatex">\(t_{proc}\)</span>，忽略单独ACK的传输时间<span class="arithmatex">\(t_{ack}\)</span>，用<span class="arithmatex">\(W\)</span>表示发送窗口大小，<span class="arithmatex">\(1\)</span>表示一帧数据的传输时间，<span class="arithmatex">\(a\)</span>表示传输时延，则信道利用率<span class="arithmatex">\(U\)</span>为：</p>
+</li>
+</ul>
+<p><span class="arithmatex">\(U=\frac{W}{1+2a}\)</span>，不考虑捎带确认</p>
+<p><span class="arithmatex">\(U=\frac{W}{2+2a}\)</span>，考虑捎带确认。</p>
+<p>若计算出的<span class="arithmatex">\(U\)</span>大于1，则<span class="arithmatex">\(U\)</span>取1。</p>
+<h1 id="_13">实例<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
+<h2 id="hdlc">HDLC<a class="headerlink" href="#hdlc" title="Permanent link">&para;</a></h2>
+<p>HDLC(High-Level Data Link Control)，高级数据链路控制</p>
+<ul>
+<li>点到点，以比特为单位传输，提供可靠的面向连接服务</li>
+<li>以01111110作为首尾标志，数据部分进行零比特填充</li>
+<li>CRC校验</li>
+<li>Go-Back-N、Selective-Repeat</li>
+<li>硬件实现</li>
+</ul>
+<h2 id="ppp">PPP<a class="headerlink" href="#ppp" title="Permanent link">&para;</a></h2>
+<p>PPP(Point-to-Point Protocol)</p>
+<ul>
+<li>点到点，以字节为单位传输，提供不进行ACK的面向无连接的服务</li>
+<li>采用字节填充</li>
+<li>CRC校验</li>
+<li>没有流量控制的机制</li>
+<li>软件实现</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+        <script src="../../../mkdocs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

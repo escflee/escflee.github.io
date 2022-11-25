@@ -1,0 +1,1063 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>SQL - escflee的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="escflee的博客" class="md-header__button md-logo" aria-label="escflee的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            escflee的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SQL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="escflee的博客" class="md-nav__button md-logo" aria-label="escflee的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    escflee的博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          课程笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          课程笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_1" type="checkbox" id="__nav_1_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_1">
+          算法设计与分析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法设计与分析" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          算法设计与分析
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/%E4%B8%BB%E5%AE%9A%E7%90%86/" class="md-nav__link">
+        主定理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_2" type="checkbox" id="__nav_1_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_2">
+          操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="操作系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        文件管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1_3" type="checkbox" id="__nav_1_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_3">
+          编译原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编译原理" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          编译原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" class="md-nav__link">
+        词法分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" class="md-nav__link">
+        语法分析
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_4">
+          数据库
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="数据库" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          数据库
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        SQL
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        关系模型
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          编程语言
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编程语言" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          编程语言
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          C
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          C
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/C%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        C基础
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          C++
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="C++" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          C++
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%2B%2B/C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        C++基础
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%2B%2B/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        面向对象程序设计
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          算法题
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法题" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          算法题
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          典型算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="典型算法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          典型算法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AE%97%E6%B3%95%E9%A2%98/%E5%85%B8%E5%9E%8B%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" class="md-nav__link">
+        排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AE%97%E6%B3%95%E9%A2%98/%E5%85%B8%E5%9E%8B%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/" class="md-nav__link">
+        搜索
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">概念<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>SQL(Structured Query Language)，结构化查询语言，包括以下几个部分：</p>
+<ul>
+<li>数据定义语言(Data-Definition Language, DDL)：定义关系模式、删除关系、修改关系模式</li>
+<li>数据操纵语言(Data-Manipulation Language, DML)：数据查询、元组级别的插入、删除和修改</li>
+<li>完整性(intergrity)</li>
+<li>视图定义(view definition)</li>
+<li>事物控制(transaction control)</li>
+<li>嵌入式SQL和动态SQL(embedded SQL and dynamic SQL)：定义SQL语句如何嵌入到C、Java等通用编程语言</li>
+<li>授权(authorization)：控制对关系和视图的访问权限</li>
+</ul>
+<h1 id="_2">关系创建<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<p><img alt="image-20221102163719931" src="../media/SQL/image-20221102163719931.png" /></p>
+<h2 id="_3">数据类型<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>char(n)：长度固定的字符串，不足会用空格填补</li>
+<li>varchar(n)：长度可变的字符串，但有最大长度限制</li>
+<li>int</li>
+<li>smallint：小整数类型</li>
+<li>numeric(p, d)：定点数，p表示总共有几位数字，d表示小数部分的位数</li>
+<li>real, double precision：浮点数和双精度浮点数</li>
+<li>float(n)：精度至少为n位的浮点数</li>
+<li>null：表示该值不存在</li>
+</ul>
+<h2 id="_4">模式定义<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">A1</span><span class="w"> </span><span class="n">D1</span><span class="p">,</span><span class="c1">-- 属性名、域</span>
+<span class="w">     </span><span class="n">A2</span><span class="w"> </span><span class="n">D2</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="p">...</span><span class="w"></span>
+<span class="w">     </span><span class="n">An</span><span class="w"> </span><span class="n">Dn</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="o">&lt;</span><span class="err">完整性约束</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">     </span><span class="p">...);</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_5">完整性约束<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>primary key(<span class="arithmatex">\(A_1,A_2,\dots,A_n\)</span>)：表示这些属性构成关系的主码。这隐含了主码属性必须非空且唯一的要求。</li>
+<li>foreign key(<span class="arithmatex">\(A_1,A_2,\dots,A_n\)</span>) references <span class="arithmatex">\(r\)</span>：表示这些属性关联到关系<span class="arithmatex">\(r\)</span>。这隐含了这些属性的取值必须在关系<span class="arithmatex">\(r\)</span>的主键中存在。</li>
+<li>not null：在定义属性的域时加以标注，显式地要求变量必须存在。</li>
+<li>check(P)：要求每个元组都要满足要求P。</li>
+<li>unique(<span class="arithmatex">\(A_1,A_2,A_3,\dots,A_n\)</span>)：表明关系中的任何元组，在所有这些属性上的值都唯一。</li>
+</ul>
+<h1 id="_6">数据查询<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<p>基本形式：</p>
+<p><img alt="image-20221102184016075" src="../media/SQL/image-20221102184016075.png" /></p>
+<p>表示从关系<span class="arithmatex">\(r_1,r_2,\dots,r_m\)</span>的笛卡尔积中筛选出满足<span class="arithmatex">\(P\)</span>的元组，再将这些元组投影到属性<span class="arithmatex">\(A_1,A_2,\dots,A_n\)</span>上。</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(select\)</span>语句：</p>
+</li>
+<li>
+<p>可以用*号表示选择所有属性。</p>
+</li>
+<li><span class="arithmatex">\(distinct\)</span>表示去除重复，<span class="arithmatex">\(all\)</span>表示不去除重复(默认)。</li>
+<li>
+<p>可以直接进行+、-、*、/的运算。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(from\)</span>语句：</p>
+</li>
+<li>
+<p><span class="arithmatex">\(where\)</span>语句：</p>
+</li>
+<li>
+<p>可以省略。</p>
+</li>
+<li>
+<p>可以使用=、&lt;、&gt;、&lt;=、&gt;=、&lt;&gt;（不等于）</p>
+</li>
+<li>
+<p>还可以使用between...and语句，如：</p>
+<div class="highlight"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="n">name</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">instructor</span><span class="w"></span>
+<span class="k">where</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="k">between</span><span class="w"> </span><span class="mi">90000</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">100000</span><span class="p">;</span><span class="w"></span>
+<span class="c1">-- 可以取代：</span>
+<span class="k">where</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">100000</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">90000</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>不同的条件之间用and、or连接</p>
+</li>
+</ul>
+<h2 id="_7">连接<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>自然连接natural join</p>
+</li>
+<li>
+<p>指定自然连接中哪些列相等：</p>
+</li>
+</ul>
+<p>a join b using(a1,a2)</p>
+<ul>
+<li>指定连接条件：</li>
+</ul>
+<p>a join b on ...</p>
+<div class="highlight"><pre><span></span><code><span class="k">from</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="k">natural</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">takes</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="k">using</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">student</span><span class="p">.</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">takes</span><span class="p">.</span><span class="n">ID</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_8">外连接<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>在上面连接的基础上，可以选择保留未匹配的元组，空缺值会用null填充。为了区分，前面的不保留未匹配元组的连接称作内连接(inner join)，关键字inner可以省略。</p>
+<ul>
+<li>左外连接(left outer join)：保留左边关系中未匹配的元组</li>
+<li>右外连接(right outer join)：保留右边关系中未匹配的元组</li>
+<li>全外连接(full outer join)：保留两边关系中未匹配的元组</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- 获取所有学生的选课信息，包括没有选任何课的学生</span>
+<span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="k">natural</span><span class="w"> </span><span class="k">left</span><span class="w"> </span><span class="k">outer</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">takes</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_9">重命名<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1">-- oldname as newname，如：</span>
+<span class="k">select</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">course_id</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">instructor</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">teaches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">S</span><span class="w"></span>
+<span class="k">where</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">ID</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>select和from语句中都可以使用。</p>
+<h2 id="_10">排序<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>order by语句可以将查询到的结果进行排序。desc表示降序，asc表示升序。</p>
+<h2 id="_11">聚集函数<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>对数据集进行某些统计运算，如：</p>
+<ul>
+<li>avg</li>
+<li>min</li>
+<li>max</li>
+<li>sum</li>
+<li>count</li>
+</ul>
+<h2 id="_12">分组<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>group by语句将元组按条件进行分组。使用group by语句后select语句中只允许出现分组属性，没有用于分组的属性除非用聚集函数转化为单个值，否则不允许出现在select语句中。</p>
+<p>having语句对分组进行筛选。作为对比，where语句对元组进行筛选。</p>
+<div class="highlight"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="n">dept_name</span><span class="p">,</span><span class="w"> </span><span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">avg_salary</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">instructor</span><span class="w"></span>
+<span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">dept_name</span><span class="w"></span>
+<span class="k">having</span><span class="w"> </span><span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">42000</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_13">空值<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>可以用is null、is not null判断是否为空值</li>
+<li>在distinct操作中，两个空值视为相同</li>
+<li>在&lt;、&gt;、=等比较运算中，只要两边有一个值为空，则返回unknown。select-from-where运算中结果为unknown的元组不会出现在结果中。</li>
+</ul>
+<h2 id="_14">执行顺序<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>根据from语句进行笛卡尔积的操作。</li>
+<li>根据where语句对元组进行筛选。</li>
+<li>利用group by语句进行分组（如果有）。</li>
+<li>根据having语句对分组进行筛选（如果有）。</li>
+<li>执行select语句。</li>
+<li>根据order by语句进行排序（如果有）。</li>
+</ol>
+<h1 id="_15">表关联查询<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h1>
+<h2 id="_16">集合运算<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<ul>
+<li>union：并运算，自动去重，若要保留重复需要使用union all</li>
+<li>intersect：交运算，自动去重，若要保留重复需要使用intersect all</li>
+<li>except：差运算，自动去重，若要保留重复需要使用except all</li>
+</ul>
+<h2 id="_17">嵌套查询<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<p>一个select语句得到的结果可以作为另一个select语句的条件。</p>
+<h2 id="in">in<a class="headerlink" href="#in" title="Permanent link">&para;</a></h2>
+<p>in后面可以是某个select语句，也可以直接给出该集合，如：</p>
+<p>in ('Fall', 'Winter', 'Spring', 'Summer')</p>
+<h2 id="someall">some、all<a class="headerlink" href="#someall" title="Permanent link">&para;</a></h2>
+<h2 id="exists">exists<a class="headerlink" href="#exists" title="Permanent link">&para;</a></h2>
+<p>用not exists语句模拟集合的包含操作：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- 查找选修了生物系开设的所有课程的学生</span>
+<span class="k">select</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">ID</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">name</span><span class="w"></span>
+<span class="k">from</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">S</span><span class="w"></span>
+<span class="k">where</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">exists</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="n">course_id</span><span class="w"></span>
+<span class="w">                  </span><span class="k">from</span><span class="w"> </span><span class="n">course</span><span class="w"></span>
+<span class="w">                  </span><span class="k">where</span><span class="w"> </span><span class="n">dept_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Biology&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                  </span><span class="k">except</span><span class="w"></span>
+<span class="w">                 </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">course_id</span><span class="w"></span>
+<span class="w">                  </span><span class="k">from</span><span class="w"> </span><span class="n">takes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="w">                  </span><span class="k">where</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">ID</span><span class="p">));</span><span class="w"></span>
+</code></pre></div>
+<p>也就是用小的集合减去大的集合，如果得到的结果为空，表示小集合属于大集合。</p>
+<h2 id="unique">unique<a class="headerlink" href="#unique" title="Permanent link">&para;</a></h2>
+<p>检测集合中是否存在重复的元组。not unique检测集合中是否存在重复的元组。注意当存在空值时，由于null = null返回值为unknown，因此即使这个元组重复出现，unique的计算结果可能仍然为真。</p>
+<h1 id="_18">数据修改<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h1>
+<h2 id="_19">插入元组<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1">-- 按建立关系时的属性顺序插入一个元组</span>
+<span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
+<span class="w">    </span><span class="k">values</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="k">c</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">-- 指定属性的顺序</span>
+<span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span><span class="n">A2</span><span class="p">,</span><span class="n">A3</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">values</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="k">c</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1">-- 批量插入</span>
+<span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
+<span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">where</span><span class="w"> </span><span class="p">...;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_20">更新元组<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">update</span><span class="w"> </span><span class="n">instructor</span><span class="w"></span>
+<span class="k">set</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span><span class="mi">05</span><span class="w"></span>
+<span class="k">where</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">70000</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_21">删除元组<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1">-- 把一个表清空，但该表依然存在</span>
+<span class="k">delete</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- 删除r中满足P的元组</span>
+<span class="k">delete</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">r</span><span class="w"></span>
+<span class="k">where</span><span class="w"> </span><span class="n">P</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_22">增加、删除属性<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1">-- 添加名为A，域为D的属性</span>
+<span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">D</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- 删除属性A</span>
+<span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">drop</span><span class="w"> </span><span class="n">A</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="_23">删除表<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">drop</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="c1">-- 把一个表清空，同时表也不再保留。</span>
+</code></pre></div>
+<h1 id="_24">视图<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h1>
+<h2 id="_25">视图创建<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h2>
+<p>create view v as \&lt;query expression></p>
+<h2 id="_26">物化视图<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h2>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="../../%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 语法分析" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              语法分析
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B/" class="md-footer__link md-footer__link--next" aria-label="下一页: 关系模型" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              关系模型
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+        <script src="../../../mkdocs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
