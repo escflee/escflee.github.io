@@ -2,17 +2,22 @@ site_name: escflee
 
 theme:
   name: material
-  features:
-    - navigation.expand
 
 nav:
   - 课程:
+    - 算法设计与分析:
+      - 主定理: 课程/算法设计与分析/主定理.md
     - 操作系统:
+      - 概述: 课程.操作系统/概述.md
+      - 进程管理: 课程/操作系统/进程管理.md
       - 内存管理: 课程/操作系统/内存管理.md
       - 文件管理: 课程/操作系统/文件管理.md
-      - 进程管理: 课程/操作系统/进程管理.md
     - 编译原理:
+      - 词法分析: 课程/编译原理/词法分析.md
       - 语法分析: 课程/编译原理/语法分析.md
+    - 数据库:
+      - SQL: 课程/数据库/SQL.md
+      - 关系模型: 课程/数据库/关系模型.md
 
 markdown_extensions:
   - pymdownx.arithmatex: # latex支持
